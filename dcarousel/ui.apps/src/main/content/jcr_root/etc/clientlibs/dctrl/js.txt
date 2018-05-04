@@ -14,5 +14,4 @@
 # limitations under the License.
 ###############################################################################
 
-jquery.infinitecarousel3.js
-jquery.infinitecarousel3.min.js
+carousel.js
