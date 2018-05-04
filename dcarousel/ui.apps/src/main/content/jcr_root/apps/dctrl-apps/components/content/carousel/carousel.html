@@ -1,5 +1,4 @@
-
-<cq:includeClientLib categories="myCarousel" />
+<cq:includeClientLib categories="jquerysamples" />
 <html>
 
 <head>
@@ -7,63 +6,166 @@
     <title>Adobe Experience Manager Custom Carousel Demo</title>
 
     <script type="text/javascript">
-$(function(){
-    $('#carousel').infiniteCarousel({
-        displayTime: 6000,
-        textholderHeight : .25
-    });
-});
-</script>
+        var slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}
+            slides[slideIndex-1].style.display = "block";
+            setTimeout(showSlides, 4000);
+        }
+    </script>
     <style type="text/css">
-body {
-    padding-top: 50px;
-}
-#carousel {
-    margin: 0 auto;
-    width: 400px;
-    height: 390px;
-    padding: 0;
-    overflow: scroll;
-    border: 2px solid #999;
-}
-#carousel ul {
-    list-style: none;
-    width: 1500px;
-    margin: 0;
-    padding: 0;
-    position: relative;
-}
-#carousel li {
-    display: inline;
-    float: left;
-}
-.textholder {
-    text-align: left;
-    font-size: small;
-    padding: 6px;
-    -moz-border-radius: 6px 6px 0 0;
-    -webkit-border-top-left-radius: 6px;
-    -webkit-border-top-right-radius: 6px;
-}
-</style>
+        * {box-sizing:border-box}
+
+        /* Slideshow container */
+        .slideshow-container {
+          max-width: 500px;
+          position: relative;
+          margin: auto;
+        }
+
+        /* Hide the images by default */
+        .mySlides {
+            display: none;
+        }
+
+        /* Next & previous buttons */
+        .prev, .next {
+          cursor: pointer;
+          position: absolute;
+          top: 50%;
+          width: auto;
+          margin-top: -22px;
+          padding: 16px;
+          color: white;
+          font-weight: bold;
+          font-size: 18px;
+          transition: 0.6s ease;
+          border-radius: 0 3px 3px 0;
+        }
+
+        /* Position the "next button" to the right */
+        .next {
+          right: 0;
+          border-radius: 3px 0 0 3px;
+        }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover, .next:hover {
+          background-color: rgba(0,0,0,0.8);
+        }
+
+        /* Caption text */
+        .text {
+          color: #f2f2f2;
+          font-size: 15px;
+          padding: 8px 12px;
+          position: absolute;
+          bottom: 8px;
+          width: 100%;
+          text-align: center;
+        }
+
+        /* Number text (1/3 etc) */
+        .numbertext {
+          color: #f2f2f2;
+          font-size: 12px;
+          padding: 8px 12px;
+          position: absolute;
+          top: 0;
+        }
+
+        /* The dots/bullets/indicators */
+        .dot {
+          cursor: pointer;
+          height: 15px;
+          width: 15px;
+          margin: 0 2px;
+          background-color: #bbb;
+          border-radius: 50%;
+          display: inline-block;
+          transition: background-color 0.6s ease;
+        }
+
+        .active, .dot:hover {
+          background-color: #717171;
+        }
+
+        /* Fading animation */
+        .fade {
+          -webkit-animation-name: fade;
+          -webkit-animation-duration: 1.5s;
+          animation-name: fade;
+          animation-duration: 1.5s;
+        }
+
+        @-webkit-keyframes fade {
+          from {opacity: .4}
+          to {opacity: 1}
+        }
+
+        @keyframes fade {
+          from {opacity: .4}
+          to {opacity: 1}
+        }
+    </style>
 </head>
 
 <body>
 
-<div id="carousel">
-    <ul>
-        <li><img alt="" src="/content/dam/travel/1.jpg" width="500" height="213" /><p>Image 1.</p>
-        </li>
-        <li><img alt="" src="/content/dam/travel/2.jpg" width="500" height="213" /><p>Image 2</p>
-        </li>
-        <li><img alt="" src="/content/dam/travel/3.jpg" width="500" height="213" /><p>Image 3</p>
-        </li>
-        <li><img alt="" src="/content/dam/travel/4.jpg" width="500" height="213" /><p>Image 4</p>
-        </li>
-        <li><img alt="" src="/content/dam/travel/5.jpg" width="500" height="213" /><p>Image 5</p>
-        </li>
-    </ul>
+<div class="slideshow-container">
+
+    <!-- Full-width images with number and caption text -->
+    <div class="mySlides fade">
+        <div class="numbertext">1 / 5</div>
+        <img src="/content/dam/dctrl-content/1.jpg">
+        <div class="text">Caption Text</div>
+    </div>
+
+    <div class="mySlides fade">
+        <div class="numbertext">2 / 5</div>
+        <img src="/content/dam/dctrl-content/2.jpg">
+        <div class="text">Caption Two</div>
+    </div>
+
+    <div class="mySlides fade">
+        <div class="numbertext">3 / 5</div>
+        <img src="/content/dam/dctrl-content/3.jpg">
+        <div class="text">Caption Three</div>
+    </div>
+
+    <div class="mySlides fade">
+        <div class="numbertext">4 / 5</div>
+        <img src="/content/dam/dctrl-content/4.jpg">
+        <div class="text">Caption Four</div>
+    </div>
+
+    <div class="mySlides fade">
+        <div class="numbertext">5 / 5</div>
+        <img src="/content/dam/dctrl-content/5.jpg">
+        <div class="text">Caption Five</div>
+    </div>
+
+    <!-- Next and previous buttons -->
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
 </div>
+<br>
+
+<!-- The dots/circles -->
+<div style="text-align:center">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+</div>
+
 <h3>This is an AEM example that uses five images retrieved from the AEM DAM and displayed within a custom Carousel component.</h3>
 
 </body>

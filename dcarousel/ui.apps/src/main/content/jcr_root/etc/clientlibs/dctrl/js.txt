@@ -14,5 +14,5 @@
 # limitations under the License.
 ###############################################################################
 
-etc/clientlibs/dctrl/jquery.infinitecarousel3.js
-etc/clientlibs/dctrl/jquery.infinitecarousel3.min.js
+jquery.infinitecarousel3.js
+jquery.infinitecarousel3.min.js

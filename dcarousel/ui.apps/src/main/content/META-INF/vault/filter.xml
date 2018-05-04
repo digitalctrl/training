@@ -2,4 +2,5 @@
 <workspaceFilter version="1.0">
     <filter root="/apps/dctrl-apps"/>
     <filter root="/apps/sling" />
+    <filter root="/etc/clientlibs/dctrl" />
 </workspaceFilter>

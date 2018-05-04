@@ -1,5 +1,5 @@
 /*
- * jQuery Infinite Carousel Cooper
+ * jQuery Infinite Carousel
  * @author admin@catchmyfame.com - http://www.catchmyfame.com
  * @version 3.0.3
  * @date January 24, 2011
