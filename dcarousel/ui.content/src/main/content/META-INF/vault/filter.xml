@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspaceFilter version="1.0">
+    <filter root="/conf/dctrl"/>
+    <filter root="/content/dctrl-content"/>
+    <filter root="/content/dam/dctrl-content"/>
+</workspaceFilter>
