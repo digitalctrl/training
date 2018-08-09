@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workspaceFilter version="1.0">
     <filter root="/conf/dctrl"/>
-    <filter root="/content/dctrl-content"/>
+    <filter root="/content/dctrl-content">
+        <exclude pattern="/content/dctrl-content/en(/.*)"/>
+        <include pattern="/content/dctrl-content/en(/.)?"/>
+        <exclude pattern="/content/dctrl-content/fr(/.*)"/>
+        <include pattern="/content/dctrl-content/fr(/.)?"/>
+    </filter>
     <filter root="/content/dam/dctrl-content"/>
 </workspaceFilter>

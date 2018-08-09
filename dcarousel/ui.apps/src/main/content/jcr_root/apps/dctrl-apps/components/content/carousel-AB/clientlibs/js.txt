@@ -1,0 +1,2 @@
+js/jquery.infinitecarousel3.js
+js/jquery.infinitecarousel3.min.js
