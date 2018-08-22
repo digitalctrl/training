@@ -1,0 +1,5 @@
+dctrl/core/listeners/SimpleResourceListenerTest.class
+dctrl/core/servlets/SimpleServletTest.class
+dctrl/core/models/HelloWorldModelTest.class
+dctrl/core/filters/LoggingFilterTest.class
+dctrl/core/schedulers/SimpleScheduledTaskTest.class

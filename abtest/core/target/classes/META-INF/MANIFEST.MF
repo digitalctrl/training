@@ -1,0 +1,37 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1533850439573
+Build-Jdk: 1.8.0_172
+Built-By: jaredrasmussen
+Bundle-Description: Core bundle for abtest
+Bundle-ManifestVersion: 2
+Bundle-Name: abtest - Core
+Bundle-SymbolicName: dctrl.abtest.core
+Bundle-Version: 1.1.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: dctrl.core.filters;uses:="javax.servlet";version="1.1.0"
+ ,dctrl.core.servlets;uses:="javax.servlet,org.apache.sling.api,org.apac
+ he.sling.api.servlets";version="1.1.0",dctrl.core.models;uses:="javax.a
+ nnotation,javax.inject,org.apache.sling.api,org.apache.sling.api.resour
+ ce,org.apache.sling.models.annotations";version="1.1.0",dctrl.core;vers
+ ion="1.0",dctrl.core.listeners;uses:="org.osgi.service.event";version="
+ 1.1.0",dctrl.core.schedulers;version="1.1.0"
+Import-Package: javax.inject;version="0.0.0",javax.annotation,javax.serv
+ let,org.apache.sling.api;version="[2.3,3)",org.apache.sling.api.request
+ ;version="[2.4,3)",org.apache.sling.api.resource;version="[2.10,3)",org
+ .apache.sling.api.servlets;version="[2.2,3)",org.apache.sling.models.an
+ notations;version="[1.4,2)",org.apache.sling.models.annotations.injecto
+ rspecific;version="[1.1,2)",org.apache.sling.settings;version="[1.3,2)"
+ ,org.osgi.service.event;version="[1.3,2)",org.slf4j;version="[1.7,2)"
+Provide-Capability: osgi.service;objectClass:List<String>="java.lang.Run
+ nable",osgi.service;objectClass:List<String>="javax.servlet.Filter",osg
+ i.service;objectClass:List<String>="javax.servlet.Servlet",osgi.service
+ ;objectClass:List<String>="org.osgi.service.event.EventHandler"
+Require-Capability: osgi.extender;filter:="(&(osgi.extender=osgi.compone
+ nt)(version>=1.3.0)(!(version>=2.0.0)))",osgi.ee;filter:="(&(osgi.ee=Ja
+ vaSE)(version=1.8))"
+Service-Component: OSGI-INF/dctrl.core.filters.LoggingFilter.xml,OSGI-IN
+ F/dctrl.core.listeners.SimpleResourceListener.xml,OSGI-INF/dctrl.core.s
+ chedulers.SimpleScheduledTask.xml,OSGI-INF/dctrl.core.servlets.SimpleSe
+ rvlet.xml
+Sling-Model-Packages: dctrl.core
+Tool: Bnd-3.3.0.201609221906

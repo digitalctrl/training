@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>abtest - UI apps</comment>
+<entry key="createdBy">jaredrasmussen</entry>
+<entry key="name">abtest.ui.apps</entry>
+<entry key="created">2018-08-09T15:34:00.491-0600</entry>
+<entry key="groupId">dctrl</entry>
+<entry key="version">1.1-SNAPSHOT</entry>
+<entry key="requiresRoot">false</entry>
+<entry key="group">abtest</entry>
+<entry key="description">UI apps package for abtest</entry>
+<entry key="artifactId">abtest.ui.apps</entry>
+<entry key="path">/etc/packages/abtest/abtest.ui.apps.zip</entry>
+</properties>

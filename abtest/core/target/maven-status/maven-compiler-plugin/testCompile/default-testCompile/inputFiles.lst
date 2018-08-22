@@ -1,0 +1,5 @@
+/Users/jaredrasmussen/DevSpace/AEM-projects/abtest_custom/abtest/core/src/test/java/dctrl/core/servlets/SimpleServletTest.java
+/Users/jaredrasmussen/DevSpace/AEM-projects/abtest_custom/abtest/core/src/test/java/dctrl/core/filters/LoggingFilterTest.java
+/Users/jaredrasmussen/DevSpace/AEM-projects/abtest_custom/abtest/core/src/test/java/dctrl/core/listeners/SimpleResourceListenerTest.java
+/Users/jaredrasmussen/DevSpace/AEM-projects/abtest_custom/abtest/core/src/test/java/dctrl/core/models/HelloWorldModelTest.java
+/Users/jaredrasmussen/DevSpace/AEM-projects/abtest_custom/abtest/core/src/test/java/dctrl/core/schedulers/SimpleScheduledTaskTest.java

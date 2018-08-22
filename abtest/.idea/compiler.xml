@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="abtest.core" />
+        <module name="abtest.it.launcher" />
+        <module name="abtest.it.tests" />
+        <module name="abtest.ui.apps" />
+        <module name="abtest.ui.content" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="abtest" target="1.8" />
+      <module name="abtest.core" target="1.8" />
+      <module name="abtest.it.launcher" target="1.8" />
+      <module name="abtest.it.tests" target="1.8" />
+      <module name="abtest.ui.apps" target="1.8" />
+      <module name="abtest.ui.content" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
