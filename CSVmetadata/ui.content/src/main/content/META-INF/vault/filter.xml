@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspaceFilter version="1.0">
+    <filter root="/conf/CSVmetadata"/>
+    <filter root="/content/CSVmetadata"/>
+    <filter root="/content/dam/CSVmetadata"/>
+</workspaceFilter>
