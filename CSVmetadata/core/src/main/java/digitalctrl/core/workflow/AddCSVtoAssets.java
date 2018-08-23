@@ -1,34 +1,101 @@
 package digitalctrl.core.workflow;
 
+import javax.jcr.Node;
+import javax.jcr.NodeIterator;
+import javax.jcr.RepositoryException;
+
+import com.adobe.granite.asset.api.Asset;
+import com.adobe.granite.asset.api.AssetManager;
 import com.day.cq.workflow.WorkflowException;
 import com.day.cq.workflow.WorkflowSession;
 import com.day.cq.workflow.exec.WorkItem;
 import com.day.cq.workflow.exec.WorkflowData;
 import com.day.cq.workflow.exec.WorkflowProcess;
 import com.day.cq.workflow.metadata.MetaDataMap;
-import org.osgi.framework.Constants;
-import org.osgi.service.component.annotations.Component;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.sling.api.resource.LoginException;
+import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.resource.ResourceResolverFactory;
+import org.apache.sling.jcr.resource.api.JcrResourceConstants;
+import org.osgi.service.component.annotations.Reference;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
-@Component(service = WorkflowProcess.class, immediate = true, property = {
-        Constants.SERVICE_DESCRIPTION + "= Add metadata properties to assets from parsed CSV file",
-        "process.label" + "=CSV data to assets" })
-public class AddCSVtoAssets  implements WorkflowProcess {
-    private static final Logger log = LoggerFactory.getLogger(AddCSVtoAssets.class);
+public class AddCSVtoAssets {
+    @Reference
+    private ResourceResolverFactory resolverFactory;
 
-    @Override
-    public void execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap args) throws WorkflowException {
-
-        WorkflowData workflowData = workItem.getWorkflowData();
-        String type = workflowData.getPayloadType();
-
-        log.info(type);
-
-       // if (!type.equals(""));
-
-
+    //assuming file is being uploaded in the same folder as the assets
+    public Node getAssetsParent(Node node) {
+        try {
+            node = node.getParent();
+        }catch(Exception e){
+        }
+        return node;
     }
 
+    //TODO: add method to find asset from node, based on the shot number found in the asset name
+    //assuming the parent node/path is given, as well as the target shot identifier
+    //check(loop through) the list of child nodes
+    //get and parse the file name
+    //if target is found, add metadata
+    public Node findAssetByShotNumber(Node parentNode,String identifier){
+        NodeIterator nodes = null;
+        try {
+            nodes = parentNode.getNodes();
+        } catch (RepositoryException e) {
+            e.printStackTrace();
+        }
+        while (nodes.hasNext()){
+            Node child = nodes.nextNode();
+            String shotNumber = getAssetShotNumber(child);
+
+
+        }
+
+        Node node = null;
+        return null;
+    }
+
+    //TODO: add method to parse asset name to check shot number
+    //given asset name, parse it for the shot number or other unique identifier
+
+    private String getAssetShotNumber(Node asset) {
+        String filename = "";
+        try {
+            filename = asset.getName();
+        } catch (RepositoryException e) {
+            e.printStackTrace();
+        }
+        return filename;
+    }
+
+
+
+    //TODO: add method to add the csv to the asset metadata with MVMap
+    //connect to asset metadata
+    //iterate through list of metadata given
+    //put all metadata into asset
+
+
+    public Node getNodeFromWorkItem(WorkItem workItem,WorkflowSession workflowSession) {
+        WorkflowData workflowData = workItem.getWorkflowData();
+        String path = ParseCSV.getPath(workflowData);
+
+        ResourceResolver resourceResolver = null;
+
+        final Map<String, Object> authInfo = new HashMap<>();
+        authInfo.put(JcrResourceConstants.AUTHENTICATION_INFO_SESSION, workflowSession.getSession());
+
+        try {
+            resourceResolver = resolverFactory.getResourceResolver(authInfo);
+        } catch (LoginException e) {
+            e.printStackTrace();
+        }
+        AssetManager assetManager = resourceResolver.adaptTo(AssetManager.class);
+        Asset asset = assetManager.getAsset(path);
+        Node node = asset.adaptTo(Node.class);
+        return node;
+    }
 }

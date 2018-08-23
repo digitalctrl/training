@@ -21,7 +21,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -51,7 +53,6 @@ public class ParseCSV  implements WorkflowProcess {
             //CSVdata = excelToCSV(path);
         }
         log.info(CSVdata);
-        //TODO: add functionality to process CSV
 
         // Get ResourceResolver
         final Map<String, Object> authInfo = new HashMap<>();
@@ -59,33 +60,30 @@ public class ParseCSV  implements WorkflowProcess {
         try {
             ResourceResolver resourceResolver = resolverFactory.getResourceResolver(authInfo);
             Node node = resourceResolver.getResource(path+"/jcr:content/renditions/original/jcr:content").adaptTo(Node.class);
-            log.info("\n \n "+node.toString()+" \n \n");
             InputStream in = node.getProperty("jcr:data").getBinary().getStream();
-            log.info("\n \n "+in.toString()+" \n \n");
 
             //////////////////////////////////////////////////////////////////////
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            Map<String, List<String>> csvOutput = new HashMap<>();
+            String line,header;
+            List<String> data;
 
-            StringBuilder out = new StringBuilder();
-
-            String line;
 
             while ((line = reader.readLine()) != null) {
-
-                out.append(line);
-
+                header = line.split("\\,")[0];
+                data = Arrays.asList(line.split("\\,"));
+                data.remove(0);
+                //Map contains key as the head of the column, and the data contains all cells
+                csvOutput.put(header,data);
             }
-
             reader.close();
-
-            log.info("File DATA ==> " + out.toString());
         }catch(Exception e){
             log.error(e.toString());
         }
 
     }
 
-    private String getPath(WorkflowData workflowData) {
+    protected static String getPath(WorkflowData workflowData) {
         String path = workflowData.getPayload().toString();
         String[]link = path.split("\\.");
         String[] extension = link[1].split("/");
