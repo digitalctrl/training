@@ -52,7 +52,6 @@ public class ParseCSV  implements WorkflowProcess {
             //convert xls/xlsx file to csv
             //CSVdata = excelToCSV(path);
         }
-        log.info(CSVdata);
 
         // Get ResourceResolver
         final Map<String, Object> authInfo = new HashMap<>();
@@ -62,21 +61,34 @@ public class ParseCSV  implements WorkflowProcess {
             Node node = resourceResolver.getResource(path+"/jcr:content/renditions/original/jcr:content").adaptTo(Node.class);
             InputStream in = node.getProperty("jcr:data").getBinary().getStream();
 
-            //////////////////////////////////////////////////////////////////////
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            Map<String, List<String>> csvOutput = new HashMap<>();
-            String line,header;
-            List<String> data;
+            //TODO: change to arraylist or something to take up actual amount of space
+            String[][] csvOutput = new String[100][50];
+            log.info("\n \n created csvOutput \n \n");
+            String line;
+            String[] row;
+            int x=0;
 
-
+            log.info("\n \n WORKFLOW 1 \n \n");
             while ((line = reader.readLine()) != null) {
-                header = line.split("\\,")[0];
-                data = Arrays.asList(line.split("\\,"));
-                data.remove(0);
-                //Map contains key as the head of the column, and the data contains all cells
-                csvOutput.put(header,data);
+                row = line.split("\\,");
+                for(int i = 0;i<row.length;i++){
+                    csvOutput[x][i] = row[i];
+                }
+                x++;
             }
             reader.close();
+
+            //have all metadata
+            //get first shot number (which is the 3rd column)
+            //data consists of "SHOT ###", parse it so its just the number value
+            int shotNumber;
+            for(int i = 0;i<csvOutput.length;i++){
+                shotNumber = Integer.valueOf(csvOutput[i][2].split(" ")[1]);
+                //TODO: 
+            }
+
+
         }catch(Exception e){
             log.error(e.toString());
         }

@@ -6,19 +6,20 @@ import javax.jcr.RepositoryException;
 
 import com.adobe.granite.asset.api.Asset;
 import com.adobe.granite.asset.api.AssetManager;
+import com.day.cq.commons.jcr.JcrConstants;
+import com.day.cq.dam.api.DamConstants;
 import com.day.cq.workflow.WorkflowException;
 import com.day.cq.workflow.WorkflowSession;
 import com.day.cq.workflow.exec.WorkItem;
 import com.day.cq.workflow.exec.WorkflowData;
 import com.day.cq.workflow.exec.WorkflowProcess;
 import com.day.cq.workflow.metadata.MetaDataMap;
-import org.apache.sling.api.resource.LoginException;
-import org.apache.sling.api.resource.ResourceResolver;
-import org.apache.sling.api.resource.ResourceResolverFactory;
+import org.apache.sling.api.resource.*;
 import org.apache.sling.jcr.resource.api.JcrResourceConstants;
 import org.osgi.service.component.annotations.Reference;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -77,6 +78,21 @@ public class AddCSVtoAssets {
     //connect to asset metadata
     //iterate through list of metadata given
     //put all metadata into asset
+    public void inputMetadata(Asset asset, ResourceResolver resourceResolver, String[][] metadata){
+        //get the path to the metadata, needed for the metadata resource
+        String metadataPath = String.format("%s/%s/%s",asset.getPath(), JcrConstants.JCR_CONTENT, DamConstants.METADATA_FOLDER);
+        Resource metadataResource = resourceResolver.getResource(metadataPath);
+
+        //map to put the keys and values into - correlate to DAM properties
+        ModifiableValueMap mvm = metadataResource.adaptTo(ModifiableValueMap.class);
+        //TODO: modify loop to input metadata into asset
+        //probably need counter
+
+
+
+        //mvm.put(key,value);
+
+    }
 
 
     public Node getNodeFromWorkItem(WorkItem workItem,WorkflowSession workflowSession) {
