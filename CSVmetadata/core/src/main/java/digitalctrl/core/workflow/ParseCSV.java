@@ -1,5 +1,7 @@
 package digitalctrl.core.workflow;
 
+import com.adobe.granite.asset.api.Asset;
+import com.adobe.granite.asset.api.AssetManager;
 import com.day.cq.workflow.WorkflowException;
 import com.day.cq.workflow.WorkflowSession;
 import com.day.cq.workflow.exec.WorkItem;
@@ -17,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.jcr.Node;
+import javax.jcr.NodeIterator;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
@@ -59,6 +62,7 @@ public class ParseCSV  implements WorkflowProcess {
         try {
             ResourceResolver resourceResolver = resolverFactory.getResourceResolver(authInfo);
             Node node = resourceResolver.getResource(path+"/jcr:content/renditions/original/jcr:content").adaptTo(Node.class);
+
             InputStream in = node.getProperty("jcr:data").getBinary().getStream();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -69,24 +73,47 @@ public class ParseCSV  implements WorkflowProcess {
             String[] row;
             int x=0;
 
-            log.info("\n \n WORKFLOW 1 \n \n");
-            while ((line = reader.readLine()) != null) {
-                row = line.split("\\,");
-                for(int i = 0;i<row.length;i++){
-                    csvOutput[x][i] = row[i];
-                }
-                x++;
-            }
-            reader.close();
+            //reads through CSV file and puts it into a 2d string array csvOutput
+            try {
+                while ((line = reader.readLine()) != null) {
+                    row = line.split(",", -1);
 
-            //have all metadata
-            //get first shot number (which is the 3rd column)
-            //data consists of "SHOT ###", parse it so its just the number value
-            int shotNumber;
-            for(int i = 0;i<csvOutput.length;i++){
-                shotNumber = Integer.valueOf(csvOutput[i][2].split(" ")[1]);
-                //TODO: 
+                    for (int i = 0; i < row.length; i++) {
+                        csvOutput[x][i] = row[i];
+                    }
+                    x++;
+                }
+            }catch (Exception e){
+            }finally{
+                reader.close();
             }
+
+            //loop through assets to then put the metadata into
+            AssetManager assetManager = resourceResolver.adaptTo(AssetManager.class);
+            Node assetNode = resourceResolver.getResource(path).adaptTo(Node.class);
+            Node parentNode = assetNode.getParent();
+            //loop through assets in the folder
+            for (NodeIterator it = parentNode.getNodes(); it.hasNext();) {
+                Node child = (Node) it.next();
+                //String nodePath = child.getPath()+"/jcr:content/renditions/original/jcr:content";
+                //always returning same value
+                //child = resourceResolver.getResource(path).adaptTo(Node.class);
+
+                //ex) FA18CAMBRIA_004_0109.jpg -> 0109
+                //big assumption that only the images have underscores, and must have the same format
+                if(child.getName().contains("_")) {
+                    String shotNumber = child.getName().split("_")[2].split("\\.")[0];
+                    //have the shot number from the asset
+                    //find shot number from the csv list, linear to start
+                    //TODO: change csvOutput to hashmap
+                    //if shotNumber == csvShotNumber, input metadata
+
+
+                }
+            }
+
+
+
 
 
         }catch(Exception e){

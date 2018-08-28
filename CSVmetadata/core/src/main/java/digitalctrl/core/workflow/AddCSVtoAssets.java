@@ -40,7 +40,7 @@ public class AddCSVtoAssets {
     //assuming the parent node/path is given, as well as the target shot identifier
     //check(loop through) the list of child nodes
     //get and parse the file name
-    //if target is found, add metadata
+    /*if target is found, add metadata
     public Node findAssetByShotNumber(Node parentNode,String identifier){
         NodeIterator nodes = null;
         try {
@@ -51,24 +51,19 @@ public class AddCSVtoAssets {
         while (nodes.hasNext()){
             Node child = nodes.nextNode();
             String shotNumber = getAssetShotNumber(child);
-
-
         }
 
         Node node = null;
         return null;
     }
+    */
 
     //TODO: add method to parse asset name to check shot number
     //given asset name, parse it for the shot number or other unique identifier
 
-    private String getAssetShotNumber(Node asset) {
-        String filename = "";
-        try {
-            filename = asset.getName();
-        } catch (RepositoryException e) {
-            e.printStackTrace();
-        }
+    protected static String getAssetShotNumber(Asset asset) {
+        String filename = asset.getName();
+
         return filename;
     }
 
@@ -85,8 +80,32 @@ public class AddCSVtoAssets {
 
         //map to put the keys and values into - correlate to DAM properties
         ModifiableValueMap mvm = metadataResource.adaptTo(ModifiableValueMap.class);
-        //TODO: modify loop to input metadata into asset
+        String shotNumberFromAsset = getAssetShotNumber(asset);
+
+
         //probably need counter
+        //have all metadata
+        //get first shot number (which is the 3rd column)
+        //data consists of "SHOT ###", parse it so its just the number value
+        int shotNumberFromMetadata;
+        String key,value;
+        //loop by column
+        for(int i = 1;i<metadata.length;i++){
+            //get the shot number from the csv line, currently hardcoded as the 3rd column
+            shotNumberFromMetadata = Integer.valueOf(metadata[i][2].split(" ")[1]);
+
+           // if(shotNumberFromMetadata == shotNumberFromAsset.toString()){
+
+            //}
+            //go through metadata - key is [0][j] value is [i][j]
+            for(int j=0;j<metadata[i].length;j++){
+                key = metadata[0][j];
+                value = metadata[i][j];
+                //TODO: sanitization & validation
+                mvm.put(key,value);
+            }
+
+        }
 
 
 
